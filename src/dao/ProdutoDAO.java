@@ -41,8 +41,8 @@ public class ProdutoDAO implements DAO<Produto> {
 				
 				prod.setId(rs.getInt("id"));
 				prod.setNome(rs.getString("nome"));
-				//colocar os outros metodos de set
-				
+				//colocar os outros metodos de set   .
+				//teste
 			}
 			
 			

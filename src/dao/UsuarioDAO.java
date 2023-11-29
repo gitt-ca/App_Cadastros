@@ -187,6 +187,33 @@ public class UsuarioDAO implements DAO<Usuario> {
 		}
 	
 	}
+	
+	public Optional<Usuario> login(String username, String senha) {
+        Usuario user = new Usuario();
+
+        try {
+            String sql = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
+            PreparedStatement stmt = this.socket.prepareStatement(sql);
+            stmt.setString(1, username);
+            stmt.setString(2, senha);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                user.setId(rs.getInt("id"));
+                user.setNome(rs.getString("nome"));
+                // Adicione outros métodos de set conforme necessário
+            } else {
+                return Optional.empty();
+            }
+        } catch (SQLException ex) {
+            System.err.println("Erro" + ex);
+            return Optional.empty();
+        } finally {
+            ConnectionFactory.closeConnection(socket, stmt);
+        }
+        return Optional.ofNullable(user);
+    }
 
 	
 }
